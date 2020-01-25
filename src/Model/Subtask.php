@@ -13,7 +13,8 @@ class Subtask
         if (empty($taskId)) {
             // throw new error message
         }
-        $stmt = $this->database->prepare('SELECT * FROM subtasks WHERE task_id=:task_id');
+        $sql = "SELECT * FROM subtasks WHERE task_id=:task_id";
+        $stmt = $this->database->prepare($sql);
         $stmt->bindParam('task_id', $taskId);
         $stmt->execute();
         $subtasks = $stmt->fetchAll();
@@ -27,7 +28,8 @@ class Subtask
         if (empty($taskId)) {
            // throw new error message;
         }
-        $stmt = $this->database->prepare('SELECT * FROM subtasks WHERE id=:id');
+        $sql = "SELECT * FROM subtasks WHERE id=:id";
+        $stmt = $this->database->prepare($sql);
         $stmt->bindParam('id', $taskId);
         $stmt->execute();
         $subtask = $stmt->fetch();
@@ -41,7 +43,8 @@ class Subtask
         if (empty($data['task_id']) || empty($data['name']) || empty($data['status'])) {
             // throw new error message
         }
-        $stmt = $this->database->prepare('INSERT INTO Subtasks (task_id, name, status) VALUES (:task_id, :name, :status)');
+        $sql = "INSERT INTO Subtasks (task_id, name, status) VALUES (:task_id, :name, :status)";
+        $stmt = $this->database->prepare($sql);
         $stmt->bindParam('task_id', $data['task_id']);
         $stmt->bindParam('name', $data['name']);
         $stmt->bindParam('status', $data['status']);
@@ -59,8 +62,12 @@ class Subtask
         if (empty($data['subtask_id']) || empty($data['name']) || empty($data['status'])) {
            // throw new error message
         }
+        $sql = "UPDATE Subtasks SET name=:name, status=:status WHERE id=:id";
+
+        // This will handle the check to see if the subtasks exists otherwise throw an error
         $this->getSubtask($data['subtask_id']);
-        $stmt = $this->database->prepare('UPDATE Subtasks SET name=:name, status=:status WHERE id=:id');
+
+        $stmt = $this->database->prepare($sql);
         $stmt->bindParam('id', $data['subtask_id']);
         $stmt->bindParam('name', $data['name']);
         $stmt->bindParam('status', $data['status']);
@@ -78,8 +85,12 @@ class Subtask
         if (empty($subtask_id)) {
            // throw new error message
         }
+        $sql = "DELETE FROM Subtasks WHERE id=:id";
+
+          // This will handle the check to see if the subtasks exists otherwise throw an error
         $this->getSubtask($subtask_id);
-        $stmt = $this->database->prepare('DELETE FROM Subtasks WHERE id=:id');
+
+        $stmt = $this->database->prepare($sql);
         $stmt->bindParam('id', $subtask_id);
         $stmt->execute();
         if ($stmt->rowCount()>0) {

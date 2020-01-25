@@ -58,7 +58,9 @@ class Todo
 
     public function deleteTask($taskId)
     {
+        // This will handle the check to see if the task exists otherwise throw an error
         $this->getTask($taskId);
+        
         $sql = "DELETE FROM tasks WHERE id = :id";
         $stmt = $this->database->prepare($sql);
         $stmt->bindParam('id', $taskId);
