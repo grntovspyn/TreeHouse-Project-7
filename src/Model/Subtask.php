@@ -49,7 +49,7 @@ class Subtask
         $stmt->bindParam('name', $data['name']);
         $stmt->bindParam('status', $data['status']);
         $stmt->execute();
-        if ($stmt->rowCount()>0) {
+        if ($stmt->rowCount() > 0) {
             return $this->getSubtask($this->database->lastInsertId());
         } else {
            // throw new error message
@@ -72,7 +72,7 @@ class Subtask
         $stmt->bindParam('name', $data['name']);
         $stmt->bindParam('status', $data['status']);
         $stmt->execute();
-        if ($stmt->rowCount()>0) {
+        if ($stmt->rowCount() > 0) {
             return $this->getSubtask($data['subtask_id']);
         } else {
            // throw new error message
@@ -93,7 +93,7 @@ class Subtask
         $stmt = $this->database->prepare($sql);
         $stmt->bindParam('id', $subtask_id);
         $stmt->execute();
-        if ($stmt->rowCount()>0) {
+        if ($stmt->rowCount() > 0) {
             return ['message' => 'The Subtask was deleted.'];
         } else {
           // throw new error message
