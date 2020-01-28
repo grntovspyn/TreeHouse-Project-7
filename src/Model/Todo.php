@@ -29,7 +29,7 @@ class Todo
 
     public function createTask($data)
     {
-        $sql = "INSERT INTO tasks (task, status) VALUES (:task, :status)";
+        $sql = "INSERT INTO tasks(task, status) VALUES(:task, :status)";
         $stmt = $this->database->prepare($sql);
         $stmt->bindParam('task', $data['task']);
         $stmt->bindParam('status', $data['status']);
@@ -37,7 +37,7 @@ class Todo
         if($stmt->rowCount() > 0){
             return $this->getTask($this->database->lastInsertId());
         } else{
-           
+           // throw an error
         }
     }
 

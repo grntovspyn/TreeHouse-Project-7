@@ -34,8 +34,8 @@ $container['db'] = function ($c) {
     return $pdo;
 };
 
-// tasks
-$container['tasks'] = function ($c) {
+// todos
+$container['todo'] = function ($c) {
     return new App\Model\Todo($c->get('db'));
 };
 

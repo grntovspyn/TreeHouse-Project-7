@@ -27,25 +27,25 @@ $app->get('/', function ($request, $response, $args) {
 
 $app->group('/api/v1/todos', function () use($app) {
     $app->get('', function (Request $request, $response, $args) {
-        $results = $this->tasks->getTasks();
+        $results = $this->todo->getTasks();
         return $response->withJson($results, 200, JSON_PRETTY_PRINT);
     });
     $app->get('/{task_id}', function (Request $request, $response, $args) {
-        $results = $this->tasks->getTask($args['task_id']);
+        $results = $this->todo->getTask($args['task_id']);
         return $response->withJson($results, 200, JSON_PRETTY_PRINT);
     });
     $app->post('', function (Request $request, $response, $args) {
-        $results = $this->tasks->createTask($request->getParsedBody());
+        $results = $this->todo->createTask($request->getParsedBody());
         return $response->withJson($results, 201, JSON_PRETTY_PRINT);
     });
     $app->put('/{task_id}', function (Request $request, $response, $args) {
         $data = $request->getParsedBody();
         $data['task_id'] = $args['task_id'];
-        $results = $this->tasks->updateTask($data);
+        $results = $this->todo->updateTask($data);
         return $response->withJson($results, 201, JSON_PRETTY_PRINT);
     });
     $app->delete('/{task_id}', function (Request $request, $response, $args) {
-        $results = $this->tasks->deleteTask($args['task_id']);
+        $results = $this->todo->deleteTask($args['task_id']);
         return $response->withJson($results, 200, JSON_PRETTY_PRINT);
     });
     $app->group('/{task_id}/subtasks', function () use($app) {
@@ -67,11 +67,11 @@ $app->group('/api/v1/todos', function () use($app) {
             $data = $request->getParsedBody();
             $data['task_id'] = $args['task_id'];
             $data['subtask_id'] = $args['subtask_id'];
-            $results = $this->tasks->updateSubtask($data);
+            $results = $this->subtasks->updateSubtask($data);
             return $response->withJson($results, 201, JSON_PRETTY_PRINT);
         });
         $app->delete('/{subtask_id}', function (Request $request, $response, $args) {
-            $results = $this->tasks->deleteTask($args['subtask_id']);
+            $results = $this->subtasks->deleteSubtask($args['subtask_id']);
             return $response->withJson($results, 200, JSON_PRETTY_PRINT);
         });
     });
